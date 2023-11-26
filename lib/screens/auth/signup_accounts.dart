@@ -15,7 +15,6 @@ class _SignUpAccountState extends State<SignUpAccount> {
   TextEditingController userNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  TextEditingController genderController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,11 +67,6 @@ class _SignUpAccountState extends State<SignUpAccount> {
               hintText: "Enter Confirm Password",
               textInputType: TextInputType.visiblePassword,
             ),
-            TextFormInputField(
-              controller: genderController,
-              hintText: "What's your gender?",
-              textInputType: TextInputType.text,
-            ),
             const SizedBox(
               height: 15,
             ),
@@ -89,9 +83,6 @@ class _SignUpAccountState extends State<SignUpAccount> {
               ),
               style: ElevatedButton.styleFrom(
                   backgroundColor: backgroundColor, fixedSize: Size(325, 60)),
-            ),
-            const SizedBox(
-              height: 15,
             ),
             const SizedBox(
               height: 15,
