@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:prome/screens/auth/login_screen.dart';
 import 'package:prome/screens/onboard/on_boarding_screen.dart';
 import 'package:prome/utils/color.dart';
+import 'package:prome/utils/textformfield.dart';
 
 class SignUpAccount extends StatefulWidget {
   const SignUpAccount({super.key});
@@ -11,6 +12,10 @@ class SignUpAccount extends StatefulWidget {
 }
 
 class _SignUpAccountState extends State<SignUpAccount> {
+  TextEditingController userNameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController genderController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,129 +48,30 @@ class _SignUpAccountState extends State<SignUpAccount> {
                     fontWeight: FontWeight.w400),
               ),
             ),
-            Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(18))),
-              width: 325.34,
-              height: 70,
-              child: TextField(
-                decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: backgroundColor),
-                        borderRadius: BorderRadius.all(Radius.circular(18))),
-                    errorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: backgroundColor),
-                        borderRadius: BorderRadius.all(Radius.circular(18))),
-                    focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: backgroundColor),
-                        borderRadius: BorderRadius.all(Radius.circular(18))),
-                    fillColor: white,
-                    filled: true,
-                    labelText: "User Name",
-                    labelStyle: TextStyle(color: backgroundColor),
-                    hintText: "User Name",
-                    hintStyle: TextStyle(color: textColorTitle)),
-              ),
+            TextFormInputField(
+              controller: userNameController,
+              hintText: "User Name",
+              textInputType: TextInputType.text,
             ),
-            Container(
-              margin: const EdgeInsets.only(
-                top: 10,
-              ),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(18))),
-              width: 325.34,
-              height: 70,
-              child: TextField(
-                decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: backgroundColor),
-                        borderRadius: BorderRadius.all(Radius.circular(18))),
-                    errorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: backgroundColor),
-                        borderRadius: BorderRadius.all(Radius.circular(18))),
-                    focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: backgroundColor),
-                        borderRadius: BorderRadius.all(Radius.circular(18))),
-                    fillColor: white,
-                    filled: true,
-                    labelText: "Email Address/Phone Number",
-                    labelStyle: TextStyle(color: backgroundColor),
-                    hintText: "abc@gmail.com",
-                    hintStyle: TextStyle(color: textColorTitle)),
-              ),
+            TextFormInputField(
+              controller: emailController,
+              hintText: "Enter Email Address",
+              textInputType: TextInputType.emailAddress,
             ),
-            Container(
-              margin: const EdgeInsets.only(
-                top: 10,
-              ),
-              width: 325.34,
-              height: 70,
-              child: TextField(
-                decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: backgroundColor),
-                        borderRadius: BorderRadius.all(Radius.circular(18))),
-                    errorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: backgroundColor),
-                        borderRadius: BorderRadius.all(Radius.circular(18))),
-                    focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: backgroundColor),
-                        borderRadius: BorderRadius.all(Radius.circular(18))),
-                    fillColor: white,
-                    filled: true,
-                    labelText: "Password",
-                    labelStyle: TextStyle(color: backgroundColor),
-                    hintText: "Write Your Password",
-                    hintStyle: TextStyle(color: textColorTitle)),
-              ),
+            TextFormInputField(
+              controller: passwordController,
+              hintText: "Enter Password",
+              textInputType: TextInputType.visiblePassword,
             ),
-            Container(
-              margin: const EdgeInsets.only(
-                top: 10,
-              ),
-              width: 325.34,
-              height: 70,
-              child: TextField(
-                decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: backgroundColor),
-                        borderRadius: BorderRadius.all(Radius.circular(18))),
-                    errorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: backgroundColor),
-                        borderRadius: BorderRadius.all(Radius.circular(18))),
-                    focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: backgroundColor),
-                        borderRadius: BorderRadius.all(Radius.circular(18))),
-                    fillColor: white,
-                    filled: true,
-                    labelText: "Confrim Password",
-                    labelStyle: TextStyle(color: backgroundColor),
-                    hintText: "Write Your Password",
-                    hintStyle: TextStyle(color: textColorTitle)),
-              ),
+            TextFormInputField(
+              controller: passwordController,
+              hintText: "Enter Confirm Password",
+              textInputType: TextInputType.visiblePassword,
             ),
-            Container(
-              margin: const EdgeInsets.only(top: 10, bottom: 20),
-              width: 325.34,
-              height: 70,
-              child: TextField(
-                decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: backgroundColor),
-                        borderRadius: BorderRadius.all(Radius.circular(18))),
-                    errorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: backgroundColor),
-                        borderRadius: BorderRadius.all(Radius.circular(18))),
-                    focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: backgroundColor),
-                        borderRadius: BorderRadius.all(Radius.circular(18))),
-                    fillColor: white,
-                    filled: true,
-                    labelText: "Gender",
-                    labelStyle: TextStyle(color: backgroundColor),
-                    hintText: "Male/Female/Others",
-                    hintStyle: TextStyle(color: textColorTitle)),
-              ),
+            TextFormInputField(
+              controller: genderController,
+              hintText: "What's your gender?",
+              textInputType: TextInputType.text,
             ),
             const SizedBox(
               height: 15,
