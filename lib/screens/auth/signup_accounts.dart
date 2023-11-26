@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:prome/apis/register_apis.dart';
+import 'package:prome/apis/apis.dart';
 import 'package:prome/screens/auth/login_screen.dart';
 import 'package:prome/utils/color.dart';
 import 'package:prome/utils/message.dart';

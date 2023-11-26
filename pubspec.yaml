@@ -40,6 +40,7 @@ dependencies:
   group_button: ^5.3.3
   video_player: ^2.7.2
   http: ^1.1.0
+  device_info_plus: ^9.1.1
 
 dev_dependencies:
   flutter_test:

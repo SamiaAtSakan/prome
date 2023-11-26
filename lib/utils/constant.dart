@@ -3,4 +3,7 @@
 String BASEURL = "https://theprome.com/api";
 
 //API Endpoints
+//Register
 String Register_ENDPOINT = "/create-account";
+//Login
+String Login_ENDPOINT = "/auth";

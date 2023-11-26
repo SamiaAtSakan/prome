@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:prome/main_dashboard.dart';
+import 'package:prome/apis/apis.dart';
 import 'package:prome/screens/auth/signup_accounts.dart';
 import 'package:prome/utils/color.dart';
+import 'package:prome/utils/message.dart';
+import 'package:prome/utils/textformfield.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -11,7 +13,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  bool _isLoading = false;
+  TextEditingController userNameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
   @override
   void initState() {
     // TODO: implement initState
@@ -50,63 +54,32 @@ class _LoginScreenState extends State<LoginScreen> {
                     fontWeight: FontWeight.w400),
               ),
             ),
-            Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(18))),
-              width: 325.34,
-              height: 70,
-              child: TextField(
-                decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: backgroundColor),
-                        borderRadius: BorderRadius.all(Radius.circular(18))),
-                    errorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: backgroundColor),
-                        borderRadius: BorderRadius.all(Radius.circular(18))),
-                    focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: backgroundColor),
-                        borderRadius: BorderRadius.all(Radius.circular(18))),
-                    fillColor: white,
-                    filled: true,
-                    labelText: "Email Address/Phone Number",
-                    labelStyle: TextStyle(color: backgroundColor),
-                    hintText: "abc@gmail.com",
-                    hintStyle: TextStyle(color: textColorTitle)),
-              ),
+            TextFormInputField(
+              controller: userNameController,
+              hintText: "User Name",
+              textInputType: TextInputType.text,
             ),
-            Container(
-              margin: const EdgeInsets.only(top: 20, bottom: 20),
-              width: 325.34,
-              height: 70,
-              child: TextField(
-                decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: backgroundColor),
-                        borderRadius: BorderRadius.all(Radius.circular(18))),
-                    errorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: backgroundColor),
-                        borderRadius: BorderRadius.all(Radius.circular(18))),
-                    focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: backgroundColor),
-                        borderRadius: BorderRadius.all(Radius.circular(18))),
-                    fillColor: white,
-                    filled: true,
-                    labelText: "Password",
-                    labelStyle: TextStyle(color: backgroundColor),
-                    hintText: "Write Your Password",
-                    hintStyle: TextStyle(color: textColorTitle)),
-              ),
+            TextFormInputField(
+              controller: passwordController,
+              hintText: "Enter Password",
+              textInputType: TextInputType.visiblePassword,
             ),
             const SizedBox(
               height: 15,
             ),
             ElevatedButton(
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (builder) => MainDashboard()));
+                if (userNameController.text.isEmpty) {
+                  messageBar("User Name is Required", context);
+                } else if (passwordController.text.isEmpty) {
+                  messageBar("Password is Required", context);
+                } else {
+                  ApiClass().loginAccount(userNameController.text,
+                      passwordController.text, context);
+                }
               },
               child: Text(
-                "Sign In",
+                "Login In",
                 style: TextStyle(color: white),
               ),
               style: ElevatedButton.styleFrom(
