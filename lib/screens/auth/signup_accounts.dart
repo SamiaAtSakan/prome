@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:prome/main_dashboard.dart';
 import 'package:prome/screens/auth/login_screen.dart';
 import 'package:prome/screens/onboard/on_boarding_screen.dart';
 import 'package:prome/utils/color.dart';
