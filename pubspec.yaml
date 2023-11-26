@@ -39,6 +39,7 @@ dependencies:
   flutter_onboarding_slider: ^1.0.10
   group_button: ^5.3.3
   video_player: ^2.7.2
+  http: ^1.1.0
 
 dev_dependencies:
   flutter_test:
