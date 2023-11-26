@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prome/apis/register_apis.dart';
 import 'package:prome/screens/auth/login_screen.dart';
 import 'package:prome/screens/onboard/on_boarding_screen.dart';
 import 'package:prome/utils/color.dart';
@@ -72,10 +73,12 @@ class _SignUpAccountState extends State<SignUpAccount> {
             ),
             ElevatedButton(
               onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (builder) => OnBoardingScreen()));
+                ApiClass().createAccount(
+                    emailController.text,
+                    passwordController.text,
+                    passwordController.text,
+                    userNameController.text,
+                    context);
               },
               child: Text(
                 "Sign Up",
