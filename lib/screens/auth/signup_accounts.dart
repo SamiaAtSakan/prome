@@ -16,6 +16,7 @@ class _SignUpAccountState extends State<SignUpAccount> {
   TextEditingController userNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController _confrimPassword = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,7 +66,7 @@ class _SignUpAccountState extends State<SignUpAccount> {
                 textInputType: TextInputType.visiblePassword,
               ),
               TextFormInputField(
-                controller: passwordController,
+                controller: _confrimPassword,
                 hintText: "Enter Confirm Password",
                 textInputType: TextInputType.visiblePassword,
               ),
@@ -84,7 +85,7 @@ class _SignUpAccountState extends State<SignUpAccount> {
                     ApiClass().createAccount(
                         emailController.text,
                         passwordController.text,
-                        passwordController.text,
+                        _confrimPassword.text,
                         userNameController.text,
                         context);
                   }
@@ -99,7 +100,6 @@ class _SignUpAccountState extends State<SignUpAccount> {
               const SizedBox(
                 height: 15,
               ),
-              Flexible(child: Container()),
               Container(
                 margin: EdgeInsets.only(bottom: 5),
                 child: Row(

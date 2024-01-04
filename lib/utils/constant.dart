@@ -1,6 +1,6 @@
 //Base URL
 
-String BASEURL = "https://theprome.com/api";
+String BASEURL = "https://theprome.com/api/";
 
 //API Endpoints
 //Register
