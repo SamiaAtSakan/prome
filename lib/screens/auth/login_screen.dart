@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:prome/apis/apis.dart';
+import 'package:prome/screens/auth/forgot_password.dart';
 import 'package:prome/screens/auth/signup_accounts.dart';
 import 'package:prome/utils/color.dart';
 import 'package:prome/utils/message.dart';
@@ -97,7 +98,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (builder) => ForgotPassword()));
+                    },
                     child: Text(
                       "Forgot Password",
                       style: TextStyle(color: backgroundColor),

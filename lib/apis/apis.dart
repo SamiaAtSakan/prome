@@ -3,8 +3,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:prome/main_dashboard.dart';
+import 'package:prome/screens/auth/login_screen.dart';
 import 'package:prome/utils/constant.dart';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class ApiClass {
   DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
@@ -34,11 +36,12 @@ class ApiClass {
       if (response.statusCode == 200) {
         final responseJson = jsonDecode(response.body);
         print(response.body);
-        print('Success: ${responseJson['success']}');
-        print('Message: ${responseJson['message']}');
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Account created successfully')),
         );
+        final storage = FlutterSecureStorage();
+        await storage.write(
+            key: 'access_token', value: responseJson['access_token']);
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (builder) => MainDashboard()));
       } else {
@@ -81,6 +84,48 @@ class ApiClass {
             .showSnackBar(SnackBar(content: Text("Login Completed")));
         Navigator.push(
             context, MaterialPageRoute(builder: (builder) => MainDashboard()));
+      } else {
+        // Handle errors
+        print("Failed to create account. Status code: ${response.statusCode}");
+      }
+    } catch (error) {
+      // Handle network errors
+      print("Error creating account: $error");
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("$error")));
+    }
+  }
+
+  //Forgot Password
+  Future<void> forgotPassword(String email, BuildContext context) async {
+    // Replace the URL with your actual API endpoint for account creation
+
+    // Get the username and password from the text controllers
+
+    try {
+      final storage = FlutterSecureStorage();
+      final accessToken = await storage.read(key: 'access_token');
+
+      if (accessToken == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Access token not found')),
+        );
+        return;
+      }
+      final String apiUrl =
+          "$BASEURL$ResetPassword_ENDPOINT?access_token=$accessToken";
+      var map = new Map<String, dynamic>();
+      map['email'] = email;
+      map['server_key'] = '667cc80095ee1c47cfabe800dbe9895a';
+      final response = await http.post(Uri.parse(apiUrl), body: map);
+
+      if (response.statusCode == 200) {
+        // Account created successfully
+        print(response.statusCode);
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text("Email Send Successfully")));
+        Navigator.push(
+            context, MaterialPageRoute(builder: (builder) => LoginScreen()));
       } else {
         // Handle errors
         print("Failed to create account. Status code: ${response.statusCode}");

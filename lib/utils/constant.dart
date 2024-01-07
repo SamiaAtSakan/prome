@@ -7,3 +7,5 @@ String BASEURL = "https://theprome.com/api/";
 String Register_ENDPOINT = "/create-account";
 //Login
 String Login_ENDPOINT = "/auth";
+//Reset Password
+String ResetPassword_ENDPOINT = "/send-reset-password-email";
