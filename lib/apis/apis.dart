@@ -44,6 +44,8 @@ class ApiClass {
           key: 'access_token',
           value: responseJson['access_token'],
         );
+        print(storage);
+        print(response.body);
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (builder) => MainDashboard()),
@@ -91,8 +93,12 @@ class ApiClass {
 
       if (response.statusCode == 200) {
         // Account created successfully
-        print(response.statusCode);
-        print(deviceInfo);
+        final responseJson = jsonDecode(response.body);
+        final storage = FlutterSecureStorage();
+        await storage.write(
+          key: 'access_token',
+          value: responseJson['access_token'],
+        );
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text("Login Completed")));
         Navigator.push(
@@ -118,7 +124,6 @@ class ApiClass {
     try {
       final storage = FlutterSecureStorage();
       final accessToken = await storage.read(key: 'access_token');
-
       if (accessToken == null) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Access token not found')),
@@ -150,4 +155,5 @@ class ApiClass {
           .showSnackBar(SnackBar(content: Text("$error")));
     }
   }
+  //Create Story
 }
