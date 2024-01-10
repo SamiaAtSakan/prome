@@ -31,6 +31,7 @@ import 'package:prome/screens/favourite/add_favourite.dart';
 import 'package:prome/screens/friends/freinds.dart';
 import 'package:prome/profilepages/events/event_page.dart';
 import 'package:prome/screens/pages/live_video.dart';
+import 'package:prome/screens/profile_setup/setup_profile.dart';
 import 'package:prome/utils/color.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -56,28 +57,36 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Image.asset(
-                            "assets/pp.png",
-                            height: 60,
-                            width: 100,
-                          ),
-                          Text(
-                            "My Profile",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                            "See My Profile",
-                            style: TextStyle(
-                                color: Colors.grey,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 10),
-                          )
-                        ],
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (builder) => SetUpProfile()));
+                        },
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              "assets/pp.png",
+                              height: 60,
+                              width: 100,
+                            ),
+                            Text(
+                              "My Profile",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                              "See My Profile",
+                              style: TextStyle(
+                                  color: Colors.grey,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 10),
+                            )
+                          ],
+                        ),
                       ),
                       Align(
                         alignment: AlignmentDirectional.center,

@@ -28,10 +28,10 @@ class ApiClass {
       map['confirm_password'] = confirm_password;
       map['email'] = email;
 
-      final response =
-          await http.post(Uri.parse('https://theprome.com/api/create-account'),
-              // headers: {'Content-Type': 'application/json'},
-              body: map);
+      final response = await http.post(
+        Uri.parse('https://theprome.com/api/create-account'),
+        body: map,
+      );
 
       if (response.statusCode == 200) {
         final responseJson = jsonDecode(response.body);
@@ -41,15 +41,28 @@ class ApiClass {
         );
         final storage = FlutterSecureStorage();
         await storage.write(
-            key: 'access_token', value: responseJson['access_token']);
+          key: 'access_token',
+          value: responseJson['access_token'],
+        );
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (builder) => MainDashboard()));
+          context,
+          MaterialPageRoute(builder: (builder) => MainDashboard()),
+        );
       } else {
         print('Failed to register user.');
         print(response.body);
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to create account')),
-        );
+        final responseJson = jsonDecode(response.body);
+        if (responseJson['api_status'] == '400' &&
+            responseJson['errors']['error_id'] == 4) {
+          // Username is already taken
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(responseJson['errors']['error_text'])),
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Failed to create account')),
+          );
+        }
       }
     } catch (error) {
       ScaffoldMessenger.of(context).showSnackBar(
