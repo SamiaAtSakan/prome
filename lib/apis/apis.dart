@@ -44,7 +44,6 @@ class ApiClass {
           key: 'access_token',
           value: responseJson['access_token'],
         );
-        print(storage);
         print(response.body);
         Navigator.pushReplacement(
           context,
@@ -155,5 +154,47 @@ class ApiClass {
           .showSnackBar(SnackBar(content: Text("$error")));
     }
   }
-  //Create Story
+
+  //Get Use Data
+  Future<void> getUserData(
+      int user_id, BuildContext context, List<String> fetchKeys) async {
+    // Replace the URL with your actual API endpoint for account creation
+
+    // Get the username and password from the text controllers
+
+    try {
+      final storage = FlutterSecureStorage();
+      final accessToken = await storage.read(key: 'access_token');
+      if (accessToken == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Access token not found')),
+        );
+        return;
+      }
+      final String apiUrl =
+          "$BASEURL$GetUserDataEndPOINT?access_token=$accessToken";
+      var map = new Map<String, dynamic>();
+      map['user_id'] = user_id;
+      map['access_token'] = accessToken;
+      map['server_key'] = '667cc80095ee1c47cfabe800dbe9895a';
+      map['fetch'] = fetchKeys.join('');
+      final response = await http.post(Uri.parse(apiUrl), body: map);
+
+      if (response.statusCode == 200) {
+        // Account created successfully
+        print(response.statusCode);
+        print(response.body);
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("User Data Show Send Successfully")));
+      } else {
+        // Handle errors
+        print("Failed to create account. Status code: ${response.statusCode}");
+      }
+    } catch (error) {
+      // Handle network errors
+      print("Error creating account: $error");
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("$error")));
+    }
+  }
 }

@@ -16,6 +16,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController userNameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  bool _obscureText = true;
 
   @override
   void initState() {
@@ -60,10 +61,36 @@ class _LoginScreenState extends State<LoginScreen> {
               hintText: "User Name",
               textInputType: TextInputType.text,
             ),
-            TextFormInputField(
-              controller: passwordController,
-              hintText: "Enter Password",
-              textInputType: TextInputType.visiblePassword,
+            Container(
+              width: 335,
+              height: 70,
+              child: TextFormField(
+                controller: passwordController,
+                obscureText: _obscureText,
+                decoration: InputDecoration(
+                  hintText: "Enter Password",
+                  enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: backgroundColor),
+                      borderRadius: BorderRadius.all(Radius.circular(18))),
+                  errorBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: backgroundColor),
+                      borderRadius: BorderRadius.all(Radius.circular(18))),
+                  focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: backgroundColor),
+                      borderRadius: BorderRadius.all(Radius.circular(18))),
+                  border: InputBorder.none,
+                  suffixIcon: IconButton(
+                    icon: _obscureText
+                        ? Icon(Icons.visibility)
+                        : Icon(Icons.visibility_off),
+                    onPressed: () {
+                      setState(() {
+                        _obscureText = !_obscureText;
+                      });
+                    },
+                  ),
+                ),
+              ),
             ),
             const SizedBox(
               height: 15,

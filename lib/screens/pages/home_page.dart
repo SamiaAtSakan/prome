@@ -2,21 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:prome/screens/home_screens/add_story.dart';
 import 'package:prome/screens/home_screens/comment.dart';
 import 'package:prome/screens/home_screens/like.dart';
-import 'package:prome/screens/notifications/noti.dart';
 import 'package:prome/screens/notifications/notify.dart';
 import 'package:prome/screens/post/post_detail.dart';
 import 'package:prome/utils/color.dart';
 
-//  Container(
-//             width: 428,
-//             height: 256,
-//             decoration: ShapeDecoration(
-//               color: Color(0xFF3AB9D9),
-//               shape: RoundedRectangleBorder(
-//                 borderRadius: BorderRadius.circular(42),
-//               ),
-//             ),
-//           )
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -66,77 +55,10 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       InkWell(
                         onTap: () {
-                          showModalBottomSheet<void>(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return SizedBox(
-                                height: 200,
-                                width: MediaQuery.of(context).size.width,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: <Widget>[
-                                      const Text(
-                                        'Add New Story',
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      TextButton.icon(
-                                        icon: Icon(
-                                          Icons.person,
-                                          color: backgroundColor,
-                                        ),
-                                        label: const Text(
-                                          'Add Text',
-                                          style: TextStyle(color: Colors.black),
-                                        ),
-                                        onPressed: () => Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (builder) =>
-                                                    AddStory())),
-                                      ),
-                                      TextButton.icon(
-                                        icon: Icon(
-                                          Icons.video_camera_front,
-                                          color: backgroundColor,
-                                        ),
-                                        label: const Text(
-                                          'Add Video',
-                                          style: TextStyle(color: Colors.black),
-                                        ),
-                                        onPressed: () => Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (builder) =>
-                                                    AddStory())),
-                                      ),
-                                      TextButton.icon(
-                                        icon: Icon(
-                                          Icons.image,
-                                          color: backgroundColor,
-                                        ),
-                                        label: const Text(
-                                          'Add Image',
-                                          style: TextStyle(color: Colors.black),
-                                        ),
-                                        onPressed: () => Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (builder) =>
-                                                    AddStory())),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              );
-                            },
-                          );
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (builder) => AddStory()));
                         },
                         child: Column(
                           children: [
