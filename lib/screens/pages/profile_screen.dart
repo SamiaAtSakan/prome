@@ -11,7 +11,6 @@ import 'package:prome/profilepages/funding/funding.dart';
 import 'package:prome/profilepages/games/my_games.dart';
 import 'package:prome/profilepages/general_Account/general_account.dart';
 import 'package:prome/profilepages/groups/explorer_groups.dart';
-import 'package:prome/profilepages/helpsupport/help.dart';
 import 'package:prome/profilepages/images/my_image.dart';
 import 'package:prome/profilepages/invite.dart';
 import 'package:prome/profilepages/jobs/my_jobs.dart';
@@ -112,6 +111,35 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                       )
                     ],
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Card(
+                child: ListTile(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (builder) => MyInfo()));
+                  },
+                  leading: Icon(
+                    Icons.info,
+                    color: Colors.purple,
+                    size: 40,
+                  ),
+                  title: Text(
+                    "Information",
+                    style: TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.bold),
+                  ),
+                  subtitle: Text(
+                    "Profile Information",
+                    style: TextStyle(fontSize: 12),
+                  ),
+                  trailing: Icon(
+                    Icons.arrow_forward_ios,
+                    color: Colors.black,
                   ),
                 ),
               ),

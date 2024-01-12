@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:prome/main_dashboard.dart';
+import 'package:prome/models/user_data_model.dart';
 import 'package:prome/screens/auth/login_screen.dart';
 import 'package:prome/utils/constant.dart';
 import 'package:device_info_plus/device_info_plus.dart';
@@ -98,6 +99,9 @@ class ApiClass {
           key: 'access_token',
           value: responseJson['access_token'],
         );
+        await storage.write(key: "user_id", value: responseJson['user_id']);
+        print(responseJson['user_id']);
+        print(response.body);
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text("Login Completed")));
         Navigator.push(
@@ -155,46 +159,71 @@ class ApiClass {
     }
   }
 
-  //Get Use Data
-  Future<void> getUserData(
-      int user_id, BuildContext context, List<String> fetchKeys) async {
-    // Replace the URL with your actual API endpoint for account creation
+//   static Future<UserData> getUserData(String userId, BuildContext context,
+//       List<String> fetchKeys, String accessToken) async {
+//     try {
+//       final String apiUrl =
+//           "$BASEURL$GetUserDataEndPOINT?access_token=$accessToken";
 
-    // Get the username and password from the text controllers
+//       var map = <String, dynamic>{
+//         'user_id': userId,
+//         'access_token': accessToken,
+//         'server_key': '667cc80095ee1c47cfabe800dbe9895a',
+//         'fetch': fetchKeys.join(','),
+//       };
+
+//       final response = await http.post(Uri.parse(apiUrl), body: map);
+
+//       if (response.statusCode == 200) {
+//         final Map<String, dynamic> responseData = json.decode(response.body);
+//         return UserData.fromJson(responseData);
+//       } else {
+//         print('Failed to get user data. Status code: ${response.statusCode}');
+//         throw Exception('Failed to get user data');
+//       }
+//     } catch (error) {
+//       print('Error getting user data: $error');
+//       throw Exception('Error getting user data');
+//     }
+//   }
+// }
+  static Future<UserData> getUserData(
+      BuildContext context, List<String> fetchKeys) async {
+    final storage = FlutterSecureStorage();
+
+    // Retrieve access token and user ID from storage
+    String? accessToken = await storage.read(key: 'access_token');
+    String? userId = await storage.read(key: 'user_id');
+
+    if (accessToken == null || userId == null) {
+      // Handle scenario where access token or user ID is not available
+      print("Access token or user ID not found.");
+      throw Exception('Access token or user ID not found.');
+    }
 
     try {
-      final storage = FlutterSecureStorage();
-      final accessToken = await storage.read(key: 'access_token');
-      if (accessToken == null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Access token not found')),
-        );
-        return;
-      }
       final String apiUrl =
           "$BASEURL$GetUserDataEndPOINT?access_token=$accessToken";
-      var map = new Map<String, dynamic>();
-      map['user_id'] = user_id;
-      map['access_token'] = accessToken;
-      map['server_key'] = '667cc80095ee1c47cfabe800dbe9895a';
-      map['fetch'] = fetchKeys.join('');
+
+      var map = <String, dynamic>{
+        'user_id': userId,
+        'access_token': accessToken,
+        'server_key': '667cc80095ee1c47cfabe800dbe9895a',
+        'fetch': fetchKeys.join(','),
+      };
+
       final response = await http.post(Uri.parse(apiUrl), body: map);
 
       if (response.statusCode == 200) {
-        // Account created successfully
-        print(response.statusCode);
-        print(response.body);
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("User Data Show Send Successfully")));
+        final Map<String, dynamic> responseData = json.decode(response.body);
+        return UserData.fromJson(responseData);
       } else {
-        // Handle errors
-        print("Failed to create account. Status code: ${response.statusCode}");
+        print('Failed to get user data. Status code: ${response.statusCode}');
+        throw Exception('Failed to get user data');
       }
     } catch (error) {
-      // Handle network errors
-      print("Error creating account: $error");
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("$error")));
+      print('Error getting user data: $error');
+      throw Exception('Error getting user data');
     }
   }
 }
