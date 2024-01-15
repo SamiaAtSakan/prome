@@ -117,31 +117,35 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Card(
-                child: ListTile(
-                  onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (builder) => MyInfo()));
-                  },
-                  leading: Icon(
-                    Icons.info,
-                    color: Colors.purple,
-                    size: 40,
+              child: Column(
+                children: [
+                  Card(
+                    child: ListTile(
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (builder) => MyInfo()));
+                      },
+                      leading: Icon(
+                        Icons.info,
+                        color: Colors.purple,
+                        size: 40,
+                      ),
+                      title: Text(
+                        "Information",
+                        style: TextStyle(
+                            color: Colors.black, fontWeight: FontWeight.bold),
+                      ),
+                      subtitle: Text(
+                        "Profile Information",
+                        style: TextStyle(fontSize: 12),
+                      ),
+                      trailing: Icon(
+                        Icons.arrow_forward_ios,
+                        color: Colors.black,
+                      ),
+                    ),
                   ),
-                  title: Text(
-                    "Information",
-                    style: TextStyle(
-                        color: Colors.black, fontWeight: FontWeight.bold),
-                  ),
-                  subtitle: Text(
-                    "Profile Information",
-                    style: TextStyle(fontSize: 12),
-                  ),
-                  trailing: Icon(
-                    Icons.arrow_forward_ios,
-                    color: Colors.black,
-                  ),
-                ),
+                ],
               ),
             ),
             Padding(

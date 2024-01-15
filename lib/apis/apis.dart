@@ -159,34 +159,6 @@ class ApiClass {
     }
   }
 
-//   static Future<UserData> getUserData(String userId, BuildContext context,
-//       List<String> fetchKeys, String accessToken) async {
-//     try {
-//       final String apiUrl =
-//           "$BASEURL$GetUserDataEndPOINT?access_token=$accessToken";
-
-//       var map = <String, dynamic>{
-//         'user_id': userId,
-//         'access_token': accessToken,
-//         'server_key': '667cc80095ee1c47cfabe800dbe9895a',
-//         'fetch': fetchKeys.join(','),
-//       };
-
-//       final response = await http.post(Uri.parse(apiUrl), body: map);
-
-//       if (response.statusCode == 200) {
-//         final Map<String, dynamic> responseData = json.decode(response.body);
-//         return UserData.fromJson(responseData);
-//       } else {
-//         print('Failed to get user data. Status code: ${response.statusCode}');
-//         throw Exception('Failed to get user data');
-//       }
-//     } catch (error) {
-//       print('Error getting user data: $error');
-//       throw Exception('Error getting user data');
-//     }
-//   }
-// }
   static Future<UserData> getUserData(
       BuildContext context, List<String> fetchKeys) async {
     final storage = FlutterSecureStorage();

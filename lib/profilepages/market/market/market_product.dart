@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:onboarding/onboarding.dart';
-import 'package:prome/profilepages/market/market/add/add_market_place.dart';
 import 'package:prome/utils/color.dart';
 
 class MarketProduct extends StatefulWidget {
@@ -14,17 +12,6 @@ class _MarketProductState extends State<MarketProduct> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: backgroundColor,
-        onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (builder) => AddMarketPlace()));
-        },
-        child: Icon(
-          Icons.add,
-          color: Colors.white,
-        ),
-      ),
       body: Column(
         children: [
           Padding(
