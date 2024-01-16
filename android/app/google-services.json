@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "137736702238",
+    "project_id": "theprome-ccf4f",
+    "storage_bucket": "theprome-ccf4f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:137736702238:android:b93a7032468b9670caa10f",
+        "android_client_info": {
+          "package_name": "com.example.prome"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5t-fVWeOMeb4HiQ7qidRspy4ZQFhkwSk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

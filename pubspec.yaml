@@ -28,22 +28,22 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  cupertino_icons: ^1.0.2
+  device_info_plus: ^9.1.1
+  firebase_core: ^2.24.2
   flutter:
     sdk: flutter
-
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.2
-  onboarding: ^3.1.0
+  flutter_html: ^3.0.0-beta.2
+  flutter_inappwebview: ^6.0.0
   flutter_onboarding_slider: ^1.0.10
-  group_button: ^5.3.3
-  video_player: ^2.7.2
-  http: ^1.1.0
-  device_info_plus: ^9.1.1
-  intl: ^0.19.0
   flutter_secure_storage: ^9.0.0
+  group_button: ^5.3.3
+  http: ^1.1.0
   image_picker: ^1.0.6
+  intl: ^0.19.0
+  onboarding: ^3.1.0
+  video_player: ^2.7.2
+  webview_flutter: ^2.0.13
 
 dev_dependencies:
   flutter_launcher_icons: "^0.13.1"
@@ -65,7 +65,7 @@ flutter_launcher_icons:
     icon_size: 48 # min:48, max:256, default: 48
   macos:
     generate: true
-    image_path: "path/to/image.png"    
+    image_path: "path/to/image.png"
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -76,7 +76,6 @@ flutter_launcher_icons:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
-
 # The following section is specific to Flutter packages.
 flutter:
 
@@ -90,10 +89,8 @@ flutter:
     - assets/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
-
   # For details regarding adding assets from package dependencies, see
   # https://flutter.dev/assets-and-images/#from-packages
-
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a

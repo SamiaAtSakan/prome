@@ -15,3 +15,6 @@ String ResetPassword_ENDPOINT = "/send-reset-password-email";
 
 //Get User Data
 String GetUserDataEndPOINT = "/get-user-data";
+
+//News Feed
+String GetNEWSFEEDENDPOINT = "/get_news_feed";

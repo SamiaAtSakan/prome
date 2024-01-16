@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:prome/main_dashboard.dart';
 import 'package:prome/models/user_data_model.dart';
@@ -10,7 +11,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class ApiClass {
-  DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+  final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
 
   Future<void> createAccount(String email, String password,
       String confirm_password, String username, BuildContext context) async {
@@ -79,15 +80,24 @@ class ApiClass {
     // Replace the URL with your actual API endpoint for account creation
     final String apiUrl = "$BASEURL$Login_ENDPOINT";
 
-    // Get the username and password from the text controllers
-
     try {
-      var map = new Map<String, dynamic>();
-      map['server_key'] = '667cc80095ee1c47cfabe800dbe9895a';
-      map['password'] = password;
-      map['username'] = username;
-      map['device_id'] = deviceInfo.toString();
-      map['timezone'] = "";
+      // Get device information
+      AndroidDeviceInfo androidInfo;
+      try {
+        androidInfo = await deviceInfo.androidInfo;
+      } on PlatformException {
+        // Handle exception
+        print("Failed to get Android device info");
+        return;
+      }
+
+      var map = {
+        'server_key': '667cc80095ee1c47cfabe800dbe9895a',
+        'password': password,
+        'username': username,
+        'device_id': androidInfo.id, // Use Android device ID as an example
+        'timezone': "",
+      };
 
       final response = await http.post(Uri.parse(apiUrl), body: map);
 
