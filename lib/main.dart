@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:prome/splash_screen.dart';
 
 void main() async {
@@ -8,6 +10,11 @@ void main() async {
   if (!kIsWeb && defaultTargetPlatform == TargetPlatform.android) {
     await InAppWebViewController.getDefaultUserAgent();
   }
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  await OneSignal.shared.setAppId(
+    "64974c58-9993-40ed-b782-0814edc401ea",
+  );
+
   runApp(const MyApp());
 }
 

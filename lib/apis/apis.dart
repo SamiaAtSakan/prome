@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:prome/main_dashboard.dart';
 import 'package:prome/models/user_data_model.dart';
 import 'package:prome/screens/auth/login_screen.dart';
@@ -82,23 +82,18 @@ class ApiClass {
 
     try {
       // Get device information
-      AndroidDeviceInfo androidInfo;
-      try {
-        androidInfo = await deviceInfo.androidInfo;
-      } on PlatformException {
-        // Handle exception
-        print("Failed to get Android device info");
-        return;
-      }
+      String oneSignalDeviceId = await OneSignal.shared
+          .getDeviceState()
+          .then((value) => value!.userId!);
 
       var map = {
         'server_key': '667cc80095ee1c47cfabe800dbe9895a',
         'password': password,
         'username': username,
-        'device_id': androidInfo.id, // Use Android device ID as an example
+        'device_id': oneSignalDeviceId, // Use Android device ID as an example
         'timezone': "",
       };
-
+      print(oneSignalDeviceId);
       final response = await http.post(Uri.parse(apiUrl), body: map);
 
       if (response.statusCode == 200) {

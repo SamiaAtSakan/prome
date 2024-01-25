@@ -42,8 +42,11 @@ dependencies:
   image_picker: ^1.0.6
   intl: ^0.19.0
   onboarding: ^3.1.0
+  onesignal_flutter: ^3.0.0
   video_player: ^2.7.2
   webview_flutter: ^2.0.13
+   
+
 
 dev_dependencies:
   flutter_launcher_icons: "^0.13.1"
