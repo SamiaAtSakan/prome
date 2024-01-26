@@ -6,6 +6,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:prome/main_dashboard.dart';
 import 'package:http_parser/http_parser.dart';
+import 'package:prome/models/event_model.dart';
 
 class EventApi {
   Future<void> createEventApi(
@@ -104,5 +105,80 @@ class EventApi {
     final validExtensions = ['.jpg', '.jpeg', '.png', '.gif'];
     final extension = filePath.toLowerCase().split('.').last;
     return validExtensions.contains(".$extension");
+  }
+
+  //Show Events
+  Future<List<Event>> fetchEvents({
+    int limit = 35,
+    int? offset,
+    int? myOffset,
+    bool getLatestEvents = false,
+    bool getUserEvents = false,
+  }) async {
+    final storage = FlutterSecureStorage();
+    String? accessToken = await storage.read(key: 'access_token');
+    String? userId = await storage.read(key: 'user_id');
+
+    if (accessToken == null || userId == null) {
+      print("Access token or user ID not found.");
+      throw Exception('Access token or user ID not found.');
+    }
+
+    // Base URL using Uri.https
+    final Uri baseUrl = Uri.https(
+        'theprome.com', '/api/get-events', {'access_token': accessToken});
+
+    // Create a new MultipartRequest
+    final http.MultipartRequest request =
+        http.MultipartRequest('POST', baseUrl);
+
+    // Add other form data fields
+    request.fields['limit'] = limit.toString();
+    if (offset != null) request.fields['offset'] = offset.toString();
+    if (myOffset != null) request.fields['my_offset'] = myOffset.toString();
+
+    // Handle getLatestEvents and getUserEvents
+    if (getLatestEvents) {
+      request.fields['fetch'] = 'events';
+    } else if (getUserEvents) {
+      request.fields['fetch'] = 'my_events';
+    } else {
+      // Default behavior, fetch both events and user events
+      request.fields['fetch'] = 'events,my_events';
+    }
+    request.fields['server_key'] = "667cc80095ee1c47cfabe800dbe9895a";
+
+    try {
+      // Send the request
+      final http.Response response =
+          await http.Response.fromStream(await request.send());
+
+      // Check if the request was successful (status code 200)
+      if (response.statusCode == 200) {
+        // Parse and handle the response data
+        final Map<String, dynamic> responseData = json.decode(response.body);
+        final List<dynamic> eventsData = responseData['events'] ?? [];
+        final List<Event> events =
+            eventsData.map((eventData) => Event.fromJson(eventData)).toList();
+        print(events);
+        print(response.body);
+        print(responseData);
+        await storage.write(key: 'id', value: responseData['id'].toString());
+        return events;
+      } else {
+        // Handle specific errors based on status codes
+        if (response.statusCode == 401) {
+          // Unauthorized - handle accordingly
+          print('Unauthorized access');
+          print(response.body);
+        }
+        print('Error: ${response.statusCode} - ${response.reasonPhrase}');
+        throw Exception('Failed to fetch events');
+      }
+    } catch (e) {
+      // Handle exceptions
+      print('Exception: $e');
+      throw Exception('Failed to fetch events: $e');
+    }
   }
 }
