@@ -166,7 +166,7 @@ class _CreateEventState extends State<CreateEvent> {
                   }
                 },
                 child: Text(
-                  "Create Product",
+                  "Create Event",
                   style: TextStyle(color: white),
                 ),
                 style: ElevatedButton.styleFrom(
