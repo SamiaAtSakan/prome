@@ -6,6 +6,11 @@ import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:prome/splash_screen.dart';
 
 void main() async {
+  // Enable assertions in debug mode
+  assert(() {
+    return true;
+  }());
+
   WidgetsFlutterBinding.ensureInitialized();
   if (!kIsWeb && defaultTargetPlatform == TargetPlatform.android) {
     await InAppWebViewController.getDefaultUserAgent();
