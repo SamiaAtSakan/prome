@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:prome/apis/create_event_apii.dart';
 import 'package:prome/utils/color.dart';
+import 'package:prome/utils/message.dart';
 import 'package:prome/utils/textformfield.dart';
 import 'package:intl/intl.dart';
 
@@ -276,16 +277,30 @@ class _CreateEventState extends State<CreateEvent> {
             Center(
               child: ElevatedButton(
                 onPressed: () async {
-                  EventApi().createEventApi(
-                      event_name.text,
-                      _eventtDescription.text,
-                      _eventLocation.text,
-                      _eventStartDate.text,
-                      _eventEndTime.text,
-                      _eventStartTime.text,
-                      _eventEndTime.text,
-                      _image,
-                      context);
+                  if (event_name.text.isEmpty) {
+                    messageBar("Event Name is Required", context);
+                  } else if (_eventtDescription.text.isEmpty) {
+                    messageBar("Event Description is Required", context);
+                  } else if (_eventLocation.text.isEmpty) {
+                    messageBar("Event Location is Required", context);
+                  } else if (_eventStartDate.text.isEmpty ||
+                      _eventEndDate.text.isEmpty) {
+                    messageBar("Both Start and End Date is Required", context);
+                  } else if (_eventStartTime.text.isEmpty ||
+                      _eventEndTime.text.isEmpty) {
+                    messageBar("Both Start and End Time is Required", context);
+                  } else {
+                    EventApi().createEventApi(
+                        event_name.text,
+                        _eventtDescription.text,
+                        _eventLocation.text,
+                        _eventStartDate.text,
+                        _eventEndTime.text,
+                        _eventStartTime.text,
+                        _eventEndTime.text,
+                        _image,
+                        context);
+                  }
                 },
                 child: Text(
                   "Create Product",
