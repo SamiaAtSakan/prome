@@ -50,8 +50,7 @@ class EventApi {
           request.files.add(http.MultipartFile.fromBytes(
             'images',
             bytes,
-            filename:
-                'event_cover.jpg', // Adjust the filename and extension based on your requirements
+            filename: 'event_cover.jpg',
             contentType: MediaType('image', 'jpeg'),
           ));
         } else {
@@ -64,10 +63,18 @@ class EventApi {
       var response = await http.Response.fromStream(await request.send());
 
       if (response.statusCode == 200) {
+        final responseJson = jsonDecode(response.body);
+
+        // Save event ID to FlutterSecureStorage
+        await storage.write(
+            key: 'event_id', value: responseJson['event_id'].toString());
+        print(responseJson['event_id']);
         print(response.body);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Event created successfully')),
         );
+
+        // Navigate to the MainDashboard page
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (builder) => MainDashboard()),
