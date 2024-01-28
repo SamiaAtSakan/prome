@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:prome/profilepages/following/view_follow_detail.dart';
-import 'package:prome/utils/color.dart';
+import 'package:onboarding/onboarding.dart';
+import 'package:prome/apis/folllow_api.dart';
+import 'package:prome/models/follow_user_model.dart';
 
 class FollowingPage extends StatefulWidget {
-  const FollowingPage({super.key});
+  const FollowingPage({Key? key}) : super(key: key);
 
   @override
   State<FollowingPage> createState() => _FollowingPageState();
@@ -14,61 +15,60 @@ class _FollowingPageState extends State<FollowingPage>
   late AnimationController _controller;
 
   @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(vsync: this);
-  }
-
-  @override
   void dispose() {
     _controller.dispose();
     super.dispose();
   }
 
+  List<dynamic> followedUsers = [];
+  bool isLoading = true;
+
+  Future<void> loadFollowedUsers() async {
+    try {
+      FollowApi apiService = FollowApi();
+      Map<String, dynamic> response = await apiService.followUser();
+      List<dynamic> users = response[
+          'username']; // Assuming the response has a key 'users' containing the list of followed users
+
+      setState(() {
+        followedUsers = users;
+        isLoading = false;
+      });
+    } catch (e) {
+      print('Error loading followed users: $e');
+      // Handle error accordingly
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadFollowedUsers();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(
-            "Following",
-            style: TextStyle(
-                color: textColorTitle,
-                fontSize: 18,
-                fontWeight: FontWeight.w500),
-          ),
-        ),
-        body: ListView.builder(
-            // the number of items in the list
-
-            // display each item of the product list
-            itemBuilder: (context, index) {
-          return ListTile(
-            onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (builder) => ViewFollowDetail()));
-            },
-            leading: const CircleAvatar(
-              backgroundImage: AssetImage("assets/srf.png"),
-            ),
-            title: Text(
-              "Shah Ruth Khan",
-              style: TextStyle(
-                  color: textColorTitle,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700),
-            ),
-            trailing: OutlinedButton(
-              onPressed: () {
-                // Navigator.push(context,
-                //     MaterialPageRoute(builder: (builder) => MainDashboard()));
-              },
-              child: Text(
-                "Following",
-                style: TextStyle(color: backgroundColor, fontSize: 10),
-              ),
-              style: OutlinedButton.styleFrom(fixedSize: Size(120, 34)),
-            ),
-          );
-        }));
+      appBar: AppBar(
+        title: Text('Followed Users List'),
+      ),
+      body: isLoading
+          ? Center(child: CircularProgressIndicator())
+          : followedUsers.isEmpty
+              ? Center(child: Text('No followed users yet.'))
+              : ListView.builder(
+                  itemCount: followedUsers.length,
+                  itemBuilder: (context, index) {
+                    // Customize how each item is displayed
+                    return ListTile(
+                      title: Text(
+                        followedUsers[index]['username'],
+                        style: TextStyle(color: background),
+                      ),
+                      // Add more details or customize as needed
+                    );
+                  },
+                ),
+    );
   }
 }
