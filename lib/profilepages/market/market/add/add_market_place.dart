@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:prome/apis/create_product_api.dart';
 import 'package:prome/utils/color.dart';
 import 'package:prome/utils/textformfield.dart';
 
@@ -18,11 +19,39 @@ class _AddMarketPlaceState extends State<AddMarketPlace> {
   TextEditingController _productLocation = TextEditingController();
   TextEditingController _productPrice = TextEditingController();
   File? _image;
-  int _selectedValue = 1;
-  int _selectedCategory = 1;
+  String _selectedValue = "New";
+  String _selectedCategory = "Auto & Vehicles";
+
+  Map<String, int> categoryMap = {
+    'Auto & Vehicles': 1,
+    "Baby & Children's Products": 2,
+    'Beauty Products & Services': 3,
+    'Consumer Electronics': 4,
+    'Computers & Peripherals': 5,
+    'Dating Services': 6,
+    "Financial Services": 7,
+    'Gifts & Occasions': 8,
+    'Home & Garden': 9,
+    'Others': 10,
+  };
+  List<String> categoryNames = [
+    'Auto & Vehicles',
+    "Baby & Children's Products",
+    'Beauty Products & Services',
+    'Consumer Electronics',
+    'Computers & Peripherals',
+    'Dating Services',
+    "Financial Services",
+    'Gifts & Occasions',
+    'Home & Garden',
+    'Others',
+  ];
+  var items1 = ['New', "Old"];
 
   @override
   Widget build(BuildContext context) {
+    int _selectedCategoryId = categoryMap[_selectedCategory] ?? 0;
+
     return Scaffold(
         appBar: AppBar(
           title: Text(
@@ -99,29 +128,25 @@ class _AddMarketPlaceState extends State<AddMarketPlace> {
                 style: TextStyle(color: backgroundColor),
               ),
             ),
-            RadioListTile(
-              title: Text('New'), // Display the title for option
-              value: 1, // Assign a value of 1 to this option
-              groupValue:
-                  _selectedValue, // Use _selectedValue to track the selected option
-              onChanged: (value) {
-                setState(() {
-                  _selectedValue =
-                      value!; // Update _selectedValue when option 1 is selected
-                });
-              },
-            ),
+            DropdownButton(
+              // Initial Value
+              value: _selectedValue,
 
-            // Create a RadioListTile for option 2
-            RadioListTile(
-              title: Text('Old'), // Display the title for option 2
-              value: 2, // Assign a value of 2 to this option
-              groupValue:
-                  _selectedValue, // Use _selectedValue to track the selected option
-              onChanged: (value) {
+              // Down Arrow Icon
+              icon: const Icon(Icons.keyboard_arrow_down),
+
+              // Array list of items
+              items: items1.map((String items1) {
+                return DropdownMenuItem(
+                  value: items1,
+                  child: Text(items1),
+                );
+              }).toList(),
+              // After selecting the desired option,it will
+              // change button value to selected value
+              onChanged: (String? newValue) {
                 setState(() {
-                  _selectedValue =
-                      value!; // Update _selectedValue when option 2 is selected
+                  _selectedValue = newValue!;
                 });
               },
             ),
@@ -133,206 +158,38 @@ class _AddMarketPlaceState extends State<AddMarketPlace> {
                 style: TextStyle(color: backgroundColor),
               ),
             ),
-            Column(
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: RadioListTile(
-                        title: Text(
-                          'Other',
-                          style: TextStyle(fontSize: 12),
-                        ), // Display the title for option
-                        value: 1, // Assign a value of 1 to this option
-                        groupValue:
-                            _selectedCategory, // Use _selectedValue to track the selected option
-                        onChanged: (value) {
-                          setState(() {
-                            _selectedCategory =
-                                value!; // Update _selectedValue when option 1 is selected
-                          });
-                        },
-                      ),
-                    ),
-                    Expanded(
-                      child: RadioListTile(
-                        title: Text(
-                          'Auto & Vehicles',
-                          style: TextStyle(fontSize: 12),
-                        ), // Display the title for option 2
-                        value: 2, // Assign a value of 2 to this option
-                        groupValue:
-                            _selectedCategory, // Use _selectedValue to track the selected option
-                        onChanged: (value) {
-                          setState(() {
-                            _selectedCategory =
-                                value!; // Update _selectedValue when option 2 is selected
-                          });
-                        },
-                      ),
-                    )
-                  ],
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: RadioListTile(
-                        title: Text(
-                          "Baby & Children's Products",
-                          style: TextStyle(fontSize: 12),
-                        ), // Display the title for option
-                        value: 3, // Assign a value of 1 to this option
-                        groupValue:
-                            _selectedCategory, // Use _selectedValue to track the selected option
-                        onChanged: (value) {
-                          setState(() {
-                            _selectedCategory =
-                                value!; // Update _selectedValue when option 1 is selected
-                          });
-                        },
-                      ),
-                    ),
-                    Expanded(
-                      child: RadioListTile(
-                        title: Text(
-                          'Beauty Products & Services',
-                          style: TextStyle(fontSize: 12),
-                        ), // Display the title for option 2
-                        value: 4, // Assign a value of 2 to this option
-                        groupValue:
-                            _selectedCategory, // Use _selectedValue to track the selected option
-                        onChanged: (value) {
-                          setState(() {
-                            _selectedCategory =
-                                value!; // Update _selectedValue when option 2 is selected
-                          });
-                        },
-                      ),
-                    )
-                  ],
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: RadioListTile(
-                        title: Text(
-                          "Consumer Electronics",
-                          style: TextStyle(fontSize: 12),
-                        ), // Display the title for option
-                        value: 5, // Assign a value of 1 to this option
-                        groupValue:
-                            _selectedCategory, // Use _selectedValue to track the selected option
-                        onChanged: (value) {
-                          setState(() {
-                            _selectedCategory =
-                                value!; // Update _selectedValue when option 1 is selected
-                          });
-                        },
-                      ),
-                    ),
-                    Expanded(
-                      child: RadioListTile(
-                        title: Text(
-                          'Computers & Peripherals',
-                          style: TextStyle(fontSize: 12),
-                        ), // Display the title for option 2
-                        value: 6, // Assign a value of 2 to this option
-                        groupValue:
-                            _selectedCategory, // Use _selectedValue to track the selected option
-                        onChanged: (value) {
-                          setState(() {
-                            _selectedCategory =
-                                value!; // Update _selectedValue when option 2 is selected
-                          });
-                        },
-                      ),
-                    )
-                  ],
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: RadioListTile(
-                        title: Text(
-                          "Dating Services",
-                          style: TextStyle(fontSize: 12),
-                        ), // Display the title for option
-                        value: 7, // Assign a value of 1 to this option
-                        groupValue:
-                            _selectedCategory, // Use _selectedValue to track the selected option
-                        onChanged: (value) {
-                          setState(() {
-                            _selectedCategory =
-                                value!; // Update _selectedValue when option 1 is selected
-                          });
-                        },
-                      ),
-                    ),
-                    Expanded(
-                      child: RadioListTile(
-                        title: Text(
-                          'Financial Services',
-                          style: TextStyle(fontSize: 12),
-                        ), // Display the title for option 2
-                        value: 8, // Assign a value of 2 to this option
-                        groupValue:
-                            _selectedCategory, // Use _selectedValue to track the selected option
-                        onChanged: (value) {
-                          setState(() {
-                            _selectedCategory =
-                                value!; // Update _selectedValue when option 2 is selected
-                          });
-                        },
-                      ),
-                    )
-                  ],
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: RadioListTile(
-                        title: Text(
-                          "Gifts & Occasions",
-                          style: TextStyle(fontSize: 12),
-                        ), // Display the title for option
-                        value: 9, // Assign a value of 1 to this option
-                        groupValue:
-                            _selectedCategory, // Use _selectedValue to track the selected option
-                        onChanged: (value) {
-                          setState(() {
-                            _selectedCategory =
-                                value!; // Update _selectedValue when option 1 is selected
-                          });
-                        },
-                      ),
-                    ),
-                    Expanded(
-                      child: RadioListTile(
-                        title: Text(
-                          'Home & Garden',
-                          style: TextStyle(fontSize: 12),
-                        ), // Display the title for option 2
-                        value: 10, // Assign a value of 2 to this option
-                        groupValue:
-                            _selectedCategory, // Use _selectedValue to track the selected option
-                        onChanged: (value) {
-                          setState(() {
-                            _selectedCategory =
-                                value!; // Update _selectedValue when option 2 is selected
-                          });
-                        },
-                      ),
-                    )
-                  ],
-                ),
-              ],
+            DropdownButton(
+              value: _selectedCategory,
+              icon: const Icon(Icons.keyboard_arrow_down),
+              items: categoryNames.map((String category) {
+                return DropdownMenuItem(
+                  value: category,
+                  child: Text(category),
+                );
+              }).toList(),
+              onChanged: (String? newValue) {
+                setState(() {
+                  _selectedCategory = newValue!;
+                  // Update the selected category ID
+                  _selectedCategoryId = categoryMap[_selectedCategory] ?? 0;
+                });
+              },
             ),
-
             // Create a RadioListTile for option 2
 
             Center(
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  int productType = _selectedValue == 'New' ? 0 : 1;
+                  ProductApi().createProduct(
+                      productTitle: _productTitle.text,
+                      productDescription: _productDescription.text,
+                      productLocation: _productLocation.text,
+                      productPrice: int.tryParse(_productPrice.text) ?? 0,
+                      productCategory: _selectedCategoryId,
+                      productType: productType,
+                      image: _image!);
+                },
                 child: Text(
                   "Create Product",
                   style: TextStyle(color: white),
