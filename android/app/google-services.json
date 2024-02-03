@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "705153317654",
+    "project_id": "theprome-990c6",
+    "storage_bucket": "theprome-990c6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:705153317654:android:51386888b980d1b3bd6e37",
+        "android_client_info": {
+          "package_name": "com.example.prome"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtEFaWKrqVDUMbmnUFUw95_bjXaQalwI4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

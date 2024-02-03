@@ -1,23 +1,23 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
+import 'package:prome/firebase_options.dart';
 import 'package:prome/splash_screen.dart';
 
 void main() async {
-  // Enable assertions in debug mode
-  assert(() {
-    return true;
-  }());
-
   WidgetsFlutterBinding.ensureInitialized();
   if (!kIsWeb && defaultTargetPlatform == TargetPlatform.android) {
     await InAppWebViewController.getDefaultUserAgent();
   }
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   await OneSignal.shared.setAppId(
-    "64974c58-9993-40ed-b782-0814edc401ea",
+    "7f89f28d-c442-46ff-bfe3-8babd78902aa",
   );
 
   runApp(const MyApp());

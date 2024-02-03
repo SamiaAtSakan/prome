@@ -7,12 +7,12 @@ import 'package:prome/main_dashboard.dart';
 import 'package:prome/models/user_data_model.dart';
 import 'package:prome/screens/auth/login_screen.dart';
 import 'package:prome/utils/constant.dart';
-import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:timezone/timezone.dart' as tz;
+import 'package:timezone/data/latest.dart' as tz;
 
 class ApiClass {
-  final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-
+  String timezone = '';
   Future<void> createAccount(String email, String password,
       String confirm_password, String username, BuildContext context) async {
     if (password != confirm_password) {
@@ -74,6 +74,12 @@ class ApiClass {
     }
   }
 
+  String initTimezone() {
+    tz.initializeTimeZones();
+    // Get the current time zone
+    return tz.local.name;
+  }
+
   //Login Api
   Future<void> loginAccount(
       String username, String password, BuildContext context) async {
@@ -82,18 +88,31 @@ class ApiClass {
 
     try {
       // Get device information
-      String oneSignalDeviceId = await OneSignal.shared
+      String? oneSignalDeviceId = await OneSignal.shared
           .getDeviceState()
-          .then((value) => value!.userId!);
+          .then((value) => value?.userId);
+
+      // Ensure that OneSignal device ID is available
+      if (oneSignalDeviceId == null) {
+        print('OneSignal device ID is null. Ensure proper initialization.');
+        return;
+      }
+
+      // Get the current timezone
+      String timezone = initTimezone();
+      print('OneSignal Device ID: $oneSignalDeviceId');
+      print('Timezone: $timezone');
 
       var map = {
         'server_key': '667cc80095ee1c47cfabe800dbe9895a',
         'password': password,
         'username': username,
         'device_id': oneSignalDeviceId, // Use Android device ID as an example
-        'timezone': "",
+        'timezone': timezone,
       };
       print(oneSignalDeviceId);
+      print(timezone);
+
       final response = await http.post(Uri.parse(apiUrl), body: map);
 
       if (response.statusCode == 200) {

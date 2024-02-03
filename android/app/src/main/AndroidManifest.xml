@@ -4,6 +4,9 @@
         android:label="The Prome "
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
+        <service
+        android:name="com.onesignal.NotificationRestoreService"
+        android:exported="false"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
