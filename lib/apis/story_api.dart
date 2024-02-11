@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
-import 'package:http_parser/http_parser.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:prome/main_dashboard.dart';
 
 class StoryApi {
   Future<void> createStoryApi(
@@ -58,10 +58,10 @@ class StoryApi {
         );
 
         // Navigate to the MainDashboard page
-        // Navigator.pushReplacement(
-        //   context,
-        //   MaterialPageRoute(builder: (builder) => MainDashboard()),
-        // );
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (builder) => MainDashboard()),
+        );
       } else {
         final responseJson = jsonDecode(response.body);
         if (responseJson['api_status'] == '400' &&

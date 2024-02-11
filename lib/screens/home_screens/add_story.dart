@@ -18,6 +18,7 @@ class _AddStoryState extends State<AddStory> {
   TextEditingController _controllerDescription = TextEditingController();
   File? _pickedFile;
   bool _isImage = true;
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -63,29 +64,19 @@ class _AddStoryState extends State<AddStory> {
                   ),
                 ),
               ),
-              Positioned(
-                bottom: -10,
-                right: 70,
-                child: IconButton(
-                  onPressed: () {
-                    setState(() {
-                      _isImage = !_isImage; // Toggle between image and video
-                    });
-                  },
-                  icon: Icon(
-                    _isImage ? Icons.videocam : Icons.image,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
             ],
           ),
           const SizedBox(
             height: 10,
           ),
+          Text("Select Media Type"),
           TextButton(
-            onPressed: () {},
-            child: Text("Add Video Clip"),
+            onPressed: () {
+              setState(() {
+                _isImage = !_isImage;
+              });
+            },
+            child: Text(_isImage ? "Change To Video" : "Change To Picture"),
           ),
           Center(
             child: TextFormInputField(
@@ -101,33 +92,47 @@ class _AddStoryState extends State<AddStory> {
               textInputType: TextInputType.text,
             ),
           ),
-          ElevatedButton(
-            onPressed: () async {
-              if (_pickedFile == null) {
-                messageBar(
-                  "Please select Video or Image for the story",
-                  context,
-                );
-              } else {
-                StoryApi().createStoryApi(
-                  controller.text,
-                  _controllerDescription.text,
-                  _pickedFile,
-                  context,
-                  _isImage ? 'image' : 'video',
-                );
-                messageBar("aada", context);
-              }
-            },
-            child: Text(
-              "Create",
-              style: TextStyle(color: Colors.white),
-            ),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: backgroundColor,
-              fixedSize: Size(325, 60),
-            ),
-          ),
+          isLoading
+              ? Center(
+                  child: CircularProgressIndicator(),
+                )
+              : ElevatedButton(
+                  onPressed: () async {
+                    if (_pickedFile == null) {
+                      messageBar(
+                        "Please select Video or Image for the story",
+                        context,
+                      );
+                    } else if (controller.text.isEmpty) {
+                      messageBar("Title is Required", context);
+                    } else if (_controllerDescription.text.isEmpty) {
+                      messageBar("Description is Required", context);
+                    } else {
+                      setState(() {
+                        isLoading = true;
+                      });
+                      StoryApi().createStoryApi(
+                        controller.text,
+                        _controllerDescription.text,
+                        _pickedFile,
+                        context,
+                        _isImage ? 'image' : 'video',
+                      );
+                      setState(() {
+                        isLoading = false;
+                      });
+                      messageBar("Story is Posted Successfully", context);
+                    }
+                  },
+                  child: Text(
+                    "Create",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: backgroundColor,
+                    fixedSize: Size(325, 60),
+                  ),
+                ),
         ],
       ),
     );
