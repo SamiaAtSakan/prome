@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:prome/apis/story_api.dart';
 import 'package:prome/screens/home_screens/add_story.dart';
 import 'package:prome/utils/color.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -17,7 +18,7 @@ class _HomePageState extends State<HomePage> {
   Map<String, dynamic>? postData;
   String? accessToken;
   bool isLoad = false;
-
+  List<Map<String, dynamic>> stories = [];
   final storage = FlutterSecureStorage();
   var sessionCookie;
   final serverKey = '667cc80095ee1c47cfabe800dbe9895a';
@@ -26,6 +27,23 @@ class _HomePageState extends State<HomePage> {
     // TODO: implement initState
     super.initState();
     setBrowserCookie();
+    fetchData();
+  }
+
+  Future<void> fetchData() async {
+    try {
+      final Map<String, dynamic> storiesData =
+          await StoryApi().getStories(context);
+
+      final List<Map<String, dynamic>> fetchedStories =
+          List<Map<String, dynamic>>.from(storiesData['stories']);
+
+      setState(() {
+        stories = fetchedStories;
+      });
+    } catch (e) {
+      print('Error fetching stories: $e');
+    }
   }
 
   @override
@@ -72,33 +90,41 @@ class _HomePageState extends State<HomePage> {
                         ],
                       ),
                     ),
-                    Container(
-                      margin: EdgeInsets.only(top: 25),
-                      width: 250,
-                      height: 130,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: 50,
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              children: [
-                                Image.asset(
-                                  "assets/srf.png",
-                                  height: 75,
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Text(
-                                  "SRK",
-                                  style: TextStyle(color: Colors.white),
-                                )
-                              ],
-                            ),
-                          );
-                        },
+                    GestureDetector(
+                      onTap: () {
+                        StoryApi().getStories(context);
+                      },
+                      child: Container(
+                        margin: EdgeInsets.only(top: 25),
+                        width: 250,
+                        height: 130,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: stories.length,
+                          itemBuilder: (context, index) {
+                            final story = stories[index];
+
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  CircleAvatar(
+                                    radius: 38,
+                                    backgroundImage:
+                                        NetworkImage(story['thumbnail']),
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text(
+                                    story['posted'],
+                                    style: TextStyle(color: Colors.white),
+                                  )
+                                ],
+                              ),
+                            );
+                          },
+                        ),
                       ),
                     ),
                   ],

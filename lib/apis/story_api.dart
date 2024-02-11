@@ -6,6 +6,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:prome/main_dashboard.dart';
 
 class StoryApi {
+  //Create Story
   Future<void> createStoryApi(
     String story_title,
     String story_description,
@@ -87,5 +88,56 @@ class StoryApi {
     final validExtensions = ['.jpg', '.jpeg', '.png', '.gif'];
     final extension = filePath.toLowerCase().split('.').last;
     return validExtensions.contains(".$extension");
+  }
+
+  //Get Story
+  Future<Map<String, dynamic>> getStories(BuildContext context) async {
+    final storage = FlutterSecureStorage();
+    String? accessToken = await storage.read(key: 'access_token');
+    String? userId = await storage.read(key: 'user_id');
+    String? resp = await storage.read(
+      key: 'story_id',
+    );
+    if (accessToken == null || userId == null || resp == null) {
+      print("Access token or user ID not found.");
+      throw Exception('Access token or user ID not found.');
+    }
+
+    try {
+      var request = http.MultipartRequest(
+        'POST',
+        Uri.parse(
+            'https://theprome.com/api/get-stories?access_token=$accessToken'),
+      );
+
+      request.fields['server_key'] = '667cc80095ee1c47cfabe800dbe9895a';
+      var response = await http.Response.fromStream(await request.send());
+
+      if (response.statusCode == 200) {
+        final responseJson = jsonDecode(response.body);
+        print(response);
+        print(response.body);
+        print(resp);
+        return responseJson;
+      } else {
+        final responseJson = jsonDecode(response.body);
+        if (responseJson['api_status'] == '400' &&
+            responseJson['errors']['error_id'] == 4) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(responseJson['errors']['error_text'])),
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Failed to create event')),
+          );
+        }
+      }
+    } catch (error) {
+      print(error);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to create event: $error')),
+      );
+    }
+    return {};
   }
 }
