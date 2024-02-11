@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:onesignal_flutter/onesignal_flutter.dart';
+import 'package:prome/apis/news_feed_api.dart';
 import 'package:prome/main_dashboard.dart';
 import 'package:prome/models/user_data_model.dart';
 import 'package:prome/screens/auth/login_screen.dart';
@@ -126,8 +127,10 @@ class ApiClass {
         await storage.write(key: "user_id", value: responseJson['user_id']);
         print(responseJson['user_id']);
         print(response.body);
+        // await NewsFeedApi().setBrowserCookie(context);
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text("Login Completed")));
+
         Navigator.push(
             context, MaterialPageRoute(builder: (builder) => MainDashboard()));
       } else {

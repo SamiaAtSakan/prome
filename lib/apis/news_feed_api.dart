@@ -1,71 +1,85 @@
-import 'dart:convert';
-
+import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:prome/screens/pages/home_page.dart';
 
 class NewsFeedApi {
-  Future<Map<String, dynamic>> cookieApi() async {
+  final storage = FlutterSecureStorage();
+  final serverKey = '667cc80095ee1c47cfabe800dbe9895a';
+
+  Future<void> setBrowserCookie(BuildContext context) async {
     try {
-      final storage = FlutterSecureStorage();
       String? accessToken = await storage.read(key: 'access_token');
-      String? userId = await storage.read(key: 'user_id');
 
-      if (accessToken == null || userId == null) {
-        print("Access token or user ID not found.");
-        throw Exception('Access token or user ID not found.');
-      }
+      if (accessToken != null) {
+        var map = {"server_key": serverKey};
 
-      final response = await http.get(
-        Uri.parse(
-            'https://theprome.com/get_news_feed?access_token=$accessToken'),
-      );
-
-      print('API Response: ${response.body}');
-      if (response.statusCode == 200) {
-        if (response.headers['content-type']!.contains('application/json')) {
-          // Parse JSON response
-          Map<String, dynamic> jsonResponse = json.decode(response.body);
-
-          // Extract relevant information for HTML content
-          List<dynamic> userPosts = jsonResponse['user_posts'] ?? [];
-          List<dynamic> pagePosts = jsonResponse['page_posts'] ?? [];
-          List<dynamic> groupPosts = jsonResponse['group_posts'] ?? [];
-          List<dynamic> timelinePosts = jsonResponse['timeline_posts'] ?? [];
-          print(jsonResponse['user_posts']);
-          // Create HTML content
-          String htmlContent = '''
-            <html>
-              <head>
-                <title>User's Latest Posts</title>
-              </head>
-              <body>
-                <h1>User's Latest Posts</h1>
-                <ul>${userPosts.map((post) => '<li>$post</li>').join()}</ul>
-                
-                <h1>Page's Posts</h1>
-                <ul>${pagePosts.map((post) => '<li>$post</li>').join()}</ul>
-                
-                <h1>Group's Posts</h1>
-                <ul>${groupPosts.map((post) => '<li>$post</li>').join()}</ul>
-                
-                <h1>Latest Timeline Posts</h1>
-                <ul>${timelinePosts.map((post) => '<li>$post</li>').join()}</ul>
-              </body>
-            </html>
-          ''';
-
-          return {'html_content': htmlContent};
-        } else {
-          print('Non-JSON response: ${response.body}');
-          return {'html_content': 'Unexpected server response'};
-        }
+        final url = Uri.parse(
+            'https://theprome.com/api/set-browser-cookie?access_token=$accessToken');
+        final response = await http.post(url, body: map);
+        print(response.body);
+        // if (response.statusCode == 302) {
+        //   // Handle redirect
+        String redirectUrl = response.headers['location']!;
+        print(redirectUrl);
+        print(response.headers);
+        //   print('Redirecting to: $redirectUrl');
+        //   await fetchNewsFeedData(serverKey, null, context, redirectUrl);
+        // } else if (response.statusCode == 200) {
+        //   // Handle success
+        //   print('Browser cookie set successfully');
+        // } else {
+        //   // Handle other status codes
+        //   print(
+        //       'Error setting browser cookie. Status code: ${response.statusCode}');
+        //   print('Response body: ${response.body}');
+        // }
       } else {
-        throw Exception(
-            'Failed to load data. Status code: ${response.statusCode}');
+        print('Access token is null');
       }
     } catch (error) {
       print('Error: $error');
-      throw Exception('An error occurred: $error');
+    }
+  }
+
+  Future<void> fetchNewsFeedData(
+    String serverKey,
+    Map<String, dynamic>? postData,
+    BuildContext context,
+    String url,
+  ) async {
+    try {
+      String? accessToken = await storage.read(key: 'access_token');
+
+      if (accessToken != null) {
+        final url = Uri.parse(
+            'https://theprome.com/get_news_feed?access_token=$accessToken');
+        final response = await http.get(
+          url,
+          headers: {
+            'server_key': serverKey,
+            'access-token': accessToken,
+            if (postData != null) 'Content-Type': 'application/json',
+          },
+        );
+
+        if (response.statusCode == 200) {
+          final htmlString = response.body;
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(
+          //     builder: (context) => NewsFeedScreen(htmlString),
+          //   ),
+          // );
+        } else {
+          print('Error fetching news feed: ${response.statusCode}');
+          print('Response body: ${response.body}');
+        }
+      } else {
+        print('Access token is null');
+      }
+    } catch (error) {
+      print('Error: $error');
     }
   }
 }

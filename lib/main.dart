@@ -9,6 +9,13 @@ import 'package:prome/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
+  await OneSignal.shared.setAppId(
+    "7f89f28d-c442-46ff-bfe3-8babd78902aa",
+  );
+  OneSignal.shared.promptUserForPushNotificationPermission().then((value) {
+    print("Accepted Permission: $value");
+  });
   if (!kIsWeb && defaultTargetPlatform == TargetPlatform.android) {
     await InAppWebViewController.getDefaultUserAgent();
   }
@@ -16,9 +23,6 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  await OneSignal.shared.setAppId(
-    "7f89f28d-c442-46ff-bfe3-8babd78902aa",
-  );
 
   runApp(const MyApp());
 }
