@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:prome/profilepages/advertisement/add_advertisement.dart';
 import 'package:prome/profilepages/albums/album_screen.dart';
+import 'package:prome/profilepages/articles.dart';
 import 'package:prome/profilepages/blogs/blog_page.dart';
 import 'package:prome/profilepages/boosted/boosted_tab.dart';
 import 'package:prome/profilepages/common_things.dart';
@@ -165,6 +166,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       subtitle: Text(
                         "Go and Chat with Friends and Groups",
+                        style: TextStyle(fontSize: 12),
+                      ),
+                      trailing: Icon(
+                        Icons.arrow_forward_ios,
+                        color: Colors.black,
+                      ),
+                    ),
+                    ListTile(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (builder) => Articles()));
+                      },
+                      leading: Icon(Icons.art_track),
+                      title: Text(
+                        "Articles",
+                        style: TextStyle(
+                            color: Colors.black, fontWeight: FontWeight.bold),
+                      ),
+                      subtitle: Text(
+                        "Show Articles",
                         style: TextStyle(fontSize: 12),
                       ),
                       trailing: Icon(
