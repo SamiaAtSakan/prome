@@ -179,16 +179,38 @@ class _AddMarketPlaceState extends State<AddMarketPlace> {
 
             Center(
               child: ElevatedButton(
-                onPressed: () {
-                  int productType = _selectedValue == 'New' ? 0 : 1;
-                  ProductApi().createProduct(
-                      productTitle: _productTitle.text,
-                      productDescription: _productDescription.text,
-                      productLocation: _productLocation.text,
-                      productPrice: int.tryParse(_productPrice.text) ?? 0,
-                      productCategory: _selectedCategoryId,
-                      productType: productType,
-                      image: _image!);
+                onPressed: () async {
+                  if (_productTitle.text.isNotEmpty &&
+                      _productDescription.text.isNotEmpty &&
+                      _productLocation.text.isNotEmpty &&
+                      _productPrice.text.isNotEmpty &&
+                      _image != null) {
+                    int productType = _selectedValue == "New" ? 0 : 1;
+
+                    // Make API call to create product
+                    await ProductApi().createProduct(
+                      _productTitle.text,
+                      _productDescription.text,
+                      _productLocation.text,
+                      int.parse(_productPrice.text),
+                      _selectedCategoryId,
+                      productType,
+                      _image!,
+                    );
+
+                    // Clear the form after successful product creation
+                    _productTitle.clear();
+                    _productDescription.clear();
+                    _productLocation.clear();
+                    _productPrice.clear();
+                    setState(() {
+                      _image = null;
+                    });
+                  } else {
+                    // Show an error message or toast indicating required fields are missing
+                    // For simplicity, you can use a print statement
+                    print('Please fill in all required fields');
+                  }
                 },
                 child: Text(
                   "Create Product",
