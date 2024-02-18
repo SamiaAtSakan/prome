@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prome/apis/create_product_api.dart';
 import 'package:prome/utils/color.dart';
 
 class Market_Place extends StatefulWidget {
@@ -32,7 +33,10 @@ class _Market_PlaceState extends State<Market_Place> {
                       style: TextStyle(color: backgroundColor),
                     ),
                     ElevatedButton(
-                        onPressed: () {}, child: Text("View Details"))
+                        onPressed: () {
+                          ProductApi().getProducts();
+                        },
+                        child: Text("View Details"))
                   ],
                 ),
               ),

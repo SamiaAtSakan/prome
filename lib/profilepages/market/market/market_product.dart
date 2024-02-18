@@ -11,104 +11,122 @@ class MarketProduct extends StatefulWidget {
 class _MarketProductState extends State<MarketProduct> {
   @override
   Widget build(BuildContext context) {
+    String apiResponse = '';
     return Scaffold(
       body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'My Products',
-                  style: TextStyle(
-                      color: backgroundColor, fontWeight: FontWeight.bold),
-                ),
-                TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    'See All',
-                    style: TextStyle(
-                        color: backgroundColor, fontWeight: FontWeight.bold),
-                  ),
-                )
-              ],
-            ),
+          // ElevatedButton(
+          //     onPressed: () async {
+          //       try {
+          //        // final response = await ProductApi().getProducts();
+          //         setState(() {
+          //           apiResponse = response;
+          //           print('API Response: $apiResponse'); // Print response
+          //         });
+          //       } catch (e) {
+          //         print('Error: $e');
+          //       }
+          //     },
+          //     child: Text("Pressed")),
+          Text(
+            apiResponse,
+            style: TextStyle(color: Colors.black),
           ),
-          Card(
-            child: ListTile(
-              leading: CircleAvatar(
-                backgroundImage: AssetImage("assets/pp.png"),
-              ),
-              title: Text(
-                "Product Name",
-                style: TextStyle(color: backgroundColor),
-              ),
-              subtitle: Text(
-                "Product Price",
-                style: TextStyle(color: Colors.black),
-              ),
-              trailing: TextButton(
-                onPressed: () {},
-                child: Text("View"),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Products',
-                  style: TextStyle(
-                      color: backgroundColor, fontWeight: FontWeight.bold),
-                ),
-                TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    'See All',
-                    style: TextStyle(
-                        color: backgroundColor, fontWeight: FontWeight.bold),
-                  ),
-                )
-              ],
-            ),
-          ),
-          SizedBox(
-            height: 200,
-            width: MediaQuery.of(context).size.width,
-            child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: SizedBox(
-                      width: 200,
-                      child: Card(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              CircleAvatar(
-                                radius: 30,
-                                backgroundImage: AssetImage("assets/pp.png"),
-                              ),
-                              Text(
-                                "Product Name",
-                                style: TextStyle(color: backgroundColor),
-                              ),
-                              ElevatedButton(
-                                  onPressed: () {}, child: Text("View Details"))
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
-                }),
-          )
+          // Padding(
+          //   padding: const EdgeInsets.all(8.0),
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //     children: [
+          //       Text(
+          //         'My Products',
+          //         style: TextStyle(
+          //             color: backgroundColor, fontWeight: FontWeight.bold),
+          //       ),
+          //       TextButton(
+          //         onPressed: () {},
+          //         child: Text(
+          //           'See All',
+          //           style: TextStyle(
+          //               color: backgroundColor, fontWeight: FontWeight.bold),
+          //         ),
+          //       )
+          //     ],
+          //   ),
+          // ),
+          // Card(
+          //   child: ListTile(
+          //     leading: CircleAvatar(
+          //       backgroundImage: AssetImage("assets/pp.png"),
+          //     ),
+          //     title: Text(
+          //       "Product Name",
+          //       style: TextStyle(color: backgroundColor),
+          //     ),
+          //     subtitle: Text(
+          //       "Product Price",
+          //       style: TextStyle(color: Colors.black),
+          //     ),
+          //     trailing: TextButton(
+          //       onPressed: () {},
+          //       child: Text("View"),
+          //     ),
+          //   ),
+          // ),
+          // Padding(
+          //   padding: const EdgeInsets.all(8.0),
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //     children: [
+          //       Text(
+          //         'Products',
+          //         style: TextStyle(
+          //             color: backgroundColor, fontWeight: FontWeight.bold),
+          //       ),
+          //       TextButton(
+          //         onPressed: () {},
+          //         child: Text(
+          //           'See All',
+          //           style: TextStyle(
+          //               color: backgroundColor, fontWeight: FontWeight.bold),
+          //         ),
+          //       )
+          //     ],
+          //   ),
+          // ),
+          // SizedBox(
+          //   height: 200,
+          //   width: MediaQuery.of(context).size.width,
+          //   child: ListView.builder(
+          //       scrollDirection: Axis.horizontal,
+          //       itemBuilder: (context, index) {
+          //         return Padding(
+          //           padding: const EdgeInsets.all(8.0),
+          //           child: SizedBox(
+          //             width: 200,
+          //             child: Card(
+          //               child: Padding(
+          //                 padding: const EdgeInsets.all(8.0),
+          //                 child: Column(
+          //                   mainAxisAlignment: MainAxisAlignment.center,
+          //                   children: [
+          //                     CircleAvatar(
+          //                       radius: 30,
+          //                       backgroundImage: AssetImage("assets/pp.png"),
+          //                     ),
+          //                     Text(
+          //                       "Product Name",
+          //                       style: TextStyle(color: backgroundColor),
+          //                     ),
+          //                     ElevatedButton(
+          //                         onPressed: () {}, child: Text("View Details"))
+          //                   ],
+          //                 ),
+          //               ),
+          //             ),
+          //           ),
+          //         );
+          //       }),
+          // )
         ],
       ),
     );

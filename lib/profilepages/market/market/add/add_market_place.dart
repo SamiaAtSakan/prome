@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:prome/apis/create_product_api.dart';
 import 'package:prome/utils/color.dart';
 import 'package:prome/utils/textformfield.dart';
 
@@ -188,15 +187,15 @@ class _AddMarketPlaceState extends State<AddMarketPlace> {
                     int productType = _selectedValue == "New" ? 0 : 1;
 
                     // Make API call to create product
-                    await ProductApi().createProduct(
-                      _productTitle.text,
-                      _productDescription.text,
-                      _productLocation.text,
-                      int.parse(_productPrice.text),
-                      _selectedCategoryId,
-                      productType,
-                      _image!,
-                    );
+                    // await ProductApi().createProduct(
+                    //   _productTitle.text,
+                    //   _productDescription.text,
+                    //   _productLocation.text,
+                    //   int.parse(_productPrice.text),
+                    //   _selectedCategoryId,
+                    //   productType,
+                    //   _image!,
+                    // );
 
                     // Clear the form after successful product creation
                     _productTitle.clear();
