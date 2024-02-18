@@ -257,6 +257,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         color: Colors.black,
                       ),
                     ),
+                    ListTile(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (builder) => EventPage()));
+                      },
+                      leading: Icon(
+                        Icons.event,
+                        color: Colors.green,
+                        size: 40,
+                      ),
+                      title: Text(
+                        "Events",
+                        style: TextStyle(
+                            color: Colors.black, fontWeight: FontWeight.bold),
+                      ),
+                      subtitle: Text(
+                        "See and bookmark upcomming events",
+                        style: TextStyle(fontSize: 12),
+                      ),
+                      trailing: Icon(
+                        Icons.arrow_forward_ios,
+                        color: Colors.black,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -519,32 +545,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       subtitle: Text(
                         "See Popular Post",
-                        style: TextStyle(fontSize: 12),
-                      ),
-                      trailing: Icon(
-                        Icons.arrow_forward_ios,
-                        color: Colors.black,
-                      ),
-                    ),
-                    ListTile(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (builder) => EventPage()));
-                      },
-                      leading: Icon(
-                        Icons.event,
-                        color: Colors.green,
-                        size: 40,
-                      ),
-                      title: Text(
-                        "Events",
-                        style: TextStyle(
-                            color: Colors.black, fontWeight: FontWeight.bold),
-                      ),
-                      subtitle: Text(
-                        "See and bookmark upcomming events",
                         style: TextStyle(fontSize: 12),
                       ),
                       trailing: Icon(

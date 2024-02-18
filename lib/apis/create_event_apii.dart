@@ -160,6 +160,7 @@ class EventApi {
         final List<dynamic> eventsData = responseData['events'] ?? [];
         final List<Event> events =
             eventsData.map((eventData) => Event.fromJson(eventData)).toList();
+        print(response.statusCode);
         print(events);
         print(response.body);
         print(responseData);
