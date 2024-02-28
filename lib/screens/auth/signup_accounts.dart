@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:prome/apis/apis.dart';
 import 'package:prome/screens/auth/login_screen.dart';
 import 'package:prome/utils/color.dart';
 import 'package:prome/utils/message.dart';
@@ -74,22 +73,7 @@ class _SignUpAccountState extends State<SignUpAccount> {
                 height: 15,
               ),
               ElevatedButton(
-                onPressed: () {
-                  if (userNameController.text.isEmpty) {
-                    messageBar("User Name is Required", context);
-                  } else if (emailController.text.isEmpty) {
-                    messageBar("Email is Required", context);
-                  } else if (passwordController.text.isEmpty) {
-                    messageBar("Password is Required", context);
-                  } else {
-                    ApiClass().createAccount(
-                        emailController.text,
-                        passwordController.text,
-                        _confrimPassword.text,
-                        userNameController.text,
-                        context);
-                  }
-                },
+                onPressed: () {},
                 child: Text(
                   "Sign Up",
                   style: TextStyle(color: white),

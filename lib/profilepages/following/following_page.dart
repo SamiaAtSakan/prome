@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:onboarding/onboarding.dart';
-import 'package:prome/apis/folllow_api.dart';
-import 'package:prome/models/follow_user_model.dart';
 
 class FollowingPage extends StatefulWidget {
   const FollowingPage({Key? key}) : super(key: key);
@@ -23,27 +21,9 @@ class _FollowingPageState extends State<FollowingPage>
   List<dynamic> followedUsers = [];
   bool isLoading = true;
 
-  Future<void> loadFollowedUsers() async {
-    try {
-      FollowApi apiService = FollowApi();
-      Map<String, dynamic> response = await apiService.followUser();
-      List<dynamic> users = response[
-          'username']; // Assuming the response has a key 'users' containing the list of followed users
-
-      setState(() {
-        followedUsers = users;
-        isLoading = false;
-      });
-    } catch (e) {
-      print('Error loading followed users: $e');
-      // Handle error accordingly
-    }
-  }
-
   @override
   void initState() {
     super.initState();
-    loadFollowedUsers();
   }
 
   @override

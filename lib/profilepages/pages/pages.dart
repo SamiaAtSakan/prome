@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:prome/apis/page_api.dart';
 import 'package:prome/profilepages/pages/create_page.dart';
 import 'package:prome/utils/color.dart';
 
@@ -45,9 +44,7 @@ class _PagesState extends State<Pages> {
                       color: backgroundColor, fontWeight: FontWeight.bold),
                 ),
                 TextButton(
-                  onPressed: () {
-                    PageApi().getPageInfo();
-                  },
+                  onPressed: () {},
                   child: Text(
                     'See All',
                     style: TextStyle(

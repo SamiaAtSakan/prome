@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:prome/apis/group_api.dart';
-import 'package:prome/profilepages/groups/group_category.dart';
 import 'package:prome/utils/color.dart';
 
 class CreateGroup extends StatefulWidget {
@@ -183,10 +181,7 @@ class _CreateGroupState extends State<CreateGroup> {
             //
             SizedBox(height: 40),
             ElevatedButton(
-              onPressed: () {
-                GroupApi().createGroupApi(_name.text, _title.text, _desc.text,
-                    _selectedCategoryId, context);
-              },
+              onPressed: () {},
               child: Text(
                 "Next",
                 style: TextStyle(color: white),

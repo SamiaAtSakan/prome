@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:prome/apis/page_api.dart';
 import 'package:prome/utils/color.dart';
 import 'package:prome/utils/message.dart';
 import 'package:prome/utils/textformfield.dart';
@@ -64,15 +63,7 @@ class _CreatePageState extends State<CreatePage> {
             Center(
               child: ElevatedButton(
                 onPressed: () {
-                  if (validateFields()) {
-                    PageApi().createPageApi(
-                      page_name.text,
-                      page_title.text,
-                      page_category.text,
-                      page_description.text,
-                      context,
-                    );
-                  }
+                  if (validateFields()) {}
                 },
                 child: Text(
                   "Create Page",

@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:prome/apis/story_api.dart';
 import 'package:prome/utils/color.dart';
 import 'package:prome/utils/message.dart';
 import 'package:prome/utils/textformfield.dart';
@@ -111,16 +110,7 @@ class _AddStoryState extends State<AddStory> {
                       setState(() {
                         isLoading = true;
                       });
-                      StoryApi().createStoryApi(
-                        controller.text,
-                        _controllerDescription.text,
-                        _pickedFile,
-                        context,
-                        _isImage ? 'image' : 'video',
-                      );
-                      setState(() {
-                        isLoading = false;
-                      });
+
                       messageBar("Story is Posted Successfully", context);
                     }
                   },

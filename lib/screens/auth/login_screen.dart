@@ -1,10 +1,14 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:prome/apis/apis.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:prome/main_dashboard.dart';
 import 'package:prome/screens/auth/forgot_password.dart';
 import 'package:prome/screens/auth/signup_accounts.dart';
 import 'package:prome/utils/color.dart';
-import 'package:prome/utils/message.dart';
 import 'package:prome/utils/textformfield.dart';
+import 'package:social_login_buttons/social_login_buttons.dart';
+import 'package:http/http.dart' as http;
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -97,14 +101,8 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             ElevatedButton(
               onPressed: () {
-                if (userNameController.text.isEmpty) {
-                  messageBar("User Name is Required", context);
-                } else if (passwordController.text.isEmpty) {
-                  messageBar("Password is Required", context);
-                } else {
-                  ApiClass().loginAccount(userNameController.text,
-                      passwordController.text, context);
-                }
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (builder) => MainDashboard()));
               },
               child: Text(
                 "Login In",
@@ -179,6 +177,20 @@ class _LoginScreenState extends State<LoginScreen> {
                 ],
               ),
             ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SocialLoginButton(
+                buttonType: SocialLoginButtonType.google,
+                onPressed: () async {},
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SocialLoginButton(
+                buttonType: SocialLoginButtonType.facebook,
+                onPressed: () async {},
+              ),
+            )
           ],
         ),
       ),

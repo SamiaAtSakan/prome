@@ -45,6 +45,7 @@ dependencies:
   intl: ^0.19.0
   onboarding: ^3.1.0
   onesignal_flutter: ^3.0.0
+  social_login_buttons: ^1.0.7
   timezone: ^0.9.2
   video_player: ^2.7.2
   webview_flutter: ^2.0.13

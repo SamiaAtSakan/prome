@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:onboarding/onboarding.dart';
-import 'package:prome/apis/movies_api.dart';
 
 class Movies extends StatefulWidget {
   const Movies({super.key});
@@ -18,7 +17,7 @@ class _MoviesState extends State<Movies> {
           actions: [
             TextButton(
                 onPressed: () {
-                  MoviesAPi().getMovieApi();
+                  //   MoviesAPi().getMovieApi();
                 },
                 child: Text("Filters"))
           ],

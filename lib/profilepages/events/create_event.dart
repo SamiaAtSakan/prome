@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:prome/apis/create_event_apii.dart';
 import 'package:prome/utils/color.dart';
 import 'package:prome/utils/message.dart';
 import 'package:prome/utils/textformfield.dart';
@@ -236,18 +235,6 @@ class _CreateEventState extends State<CreateEvent> {
 
   void createEvent() async {
     try {
-      EventApi().createEventApi(
-        event_name.text,
-        _eventtDescription.text,
-        _eventLocation.text,
-        _eventStartDate.text,
-        _eventEndDate.text,
-        _eventStartTime.text,
-        _eventEndTime.text,
-        _image,
-        context,
-      );
-
       // Optionally, you can navigate to a different screen after successful event creation.
     } catch (error) {
       print('Failed to create event: $error');

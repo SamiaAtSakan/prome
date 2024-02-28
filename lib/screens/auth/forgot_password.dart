@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:prome/apis/apis.dart';
 import 'package:prome/utils/color.dart';
 import 'package:prome/utils/message.dart';
 import 'package:prome/utils/textformfield.dart';
@@ -38,13 +37,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
             height: 15,
           ),
           ElevatedButton(
-            onPressed: () {
-              if (_emailForgotController.text.isEmpty) {
-                messageBar("Email is Required", context);
-              } else {
-                ApiClass().forgotPassword(_emailForgotController.text, context);
-              }
-            },
+            onPressed: () {},
             child: Text(
               "Send",
               style: TextStyle(color: white),

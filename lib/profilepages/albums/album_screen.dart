@@ -1,9 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:prome/apis/album_api.dart';
-import 'package:prome/models/album_model.dart';
-import 'package:prome/profilepages/albums/album_detail.dart';
-import 'package:prome/profilepages/albums/create_album.dart';
-import 'package:prome/utils/color.dart';
 
 class AlbumScreen extends StatefulWidget {
   const AlbumScreen({super.key});
@@ -19,18 +14,6 @@ class _AlbumScreenState extends State<AlbumScreen> {
   @override
   void initState() {
     super.initState();
-    _fetchUserAlbums();
-  }
-
-  Future<void> _fetchUserAlbums() async {
-    try {
-      var albums = await AlbumApi().getUserAlbums(selectedType);
-      setState(() {
-        userAlbums = albums as List<Map<String, dynamic>>;
-      });
-    } catch (error) {
-      print('Error fetching user albums: $error');
-    }
   }
 
   @override
